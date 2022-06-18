@@ -13,17 +13,6 @@ INSERT INTO resources (
   justification
 ) VALUES
 (
-    'book',
-    'this is a book',
-    'https.google.com',
-    'nobeen',
-    1,
-    'book',
-    'week1',
-    'This is a good resource',
-    'I used it and it was crap'
-),
-(
     'Vectors and the essence of linear algebra', 
     'an introduction to vectors. Start of a series of videos on linear algebra.',
     'https://www.youtube.com/watch?v=fNk_zzaMoSs&ab_channel=3Blue1Brown',

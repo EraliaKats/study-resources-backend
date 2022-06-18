@@ -547,19 +547,21 @@ app.delete<{ user_id: string; resource_id: string }, {}, {}>(
     try {
       const user_id = parseInt(req.params.user_id);
       const resource_id = parseInt(req.params.resource_id);
-      const userExist = doesUserExist(user_id, client);
-      const resourceExist = doesResourceExist(resource_id, client);
+      const userExist = await doesUserExist(user_id, client);
+      const resourceExist = await doesResourceExist(resource_id, client);
       if (!userExist) {
         res.status(404).send({ error: `user (${user_id})not found` });
       } else if (!resourceExist) {
         res.status(404).send({ error: `resource (${resource_id}) not found` });
       } else {
         const dbres = await client.query(
-          `DELETE FROM study_list WHERE user_id = $1 AND resource_id = $2 RETURNING *`,
+          `DELETE FROM study_list WHERE author_id = $1 AND resource_id = $2 RETURNING *`,
           [user_id, resource_id]
         );
         if (dbres.rowCount < 1) {
-          res.status(400).send({ error: `unable to delete from studylist` });
+          res.status(400).send({
+            error: `unable to delete from studylist. This resource is not present in the list`,
+          });
         } else {
           res.status(200).json(dbres.rows);
         }
